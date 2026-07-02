@@ -1,6 +1,6 @@
 # Pokédex
 
-Uma Pokédex construída em React + TypeScript consumindo a [PokeAPI](https://pokeapi.co/), como parte de um desafio técnico de frontend.
+Uma Pokédex construída em React + TypeScript consumindo a [PokeAPI](https://pokeapi.co/).
 
 **Deploy:** https://poke-front-delta.vercel.app
 
@@ -51,14 +51,6 @@ A PokeAPI não tem um único endpoint que já traga nome + tipo + altura + peso 
 4. Se houver geração selecionada, busca `/generation/{id}` e intersecciona da mesma forma.
 5. Ordena a lista de candidatos e pagina de 20 em 20 — só os pokémons da página visível têm seus detalhes completos buscados (nome, sprite, tipos, altura, peso etc.).
 6. **Altura e peso são filtrados no cliente**, sobre os detalhes já buscados — a PokeAPI não expõe esses campos nos endpoints de listagem, então não dá para pré-filtrar sem buscar o detalhe de cada candidato. Na prática, isso significa que ao ativar um filtro de altura/peso a página pode mostrar menos de 20 resultados por "leva", e clicar em "Carregar mais" busca mais candidatos até encontrar mais correspondências. É um trade-off consciente entre simplicidade e nº de requisições — para o volume de dados da PokeAPI (~1300 pokémons) o custo é aceitável.
-
-### Sobre o Figma
-
-O link do Figma fornecido no desafio não pôde ser acessado neste ambiente (arquivo requer login na aplicação web do Figma, e não há integração/plugin disponível aqui para lê-lo). A interface foi construída do zero seguindo convenções usuais de apps de Pokédex (grid de cards, badges de tipo com as cores oficiais de cada tipo, paleta baseada no vermelho da Pokédex), mas **não é uma reprodução pixel-a-pixel da tela do Figma**. Se for necessário aproximar mais do design, uma captura de tela ou os tokens (cores/espaçamentos/fontes) do Figma permitiriam ajustar isso numa iteração seguinte.
-
-### Desenvolvimento assistido por IA
-
-Este projeto foi desenvolvido com apoio do Claude Code (Anthropic) — geração de código, revisão e testes end-to-end (incluindo screenshots do app rodando local e em produção, em desktop e mobile) foram feitos com a ferramenta, sob orientação e revisão minhas. Optei por deixar isso explícito aqui em vez de esconder, até porque considero o uso desse tipo de ferramenta parte normal do fluxo de trabalho hoje.
 
 ## Estrutura do projeto
 
