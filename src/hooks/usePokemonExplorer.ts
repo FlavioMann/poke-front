@@ -12,11 +12,8 @@ import type { FilterState } from '@/store/useAppStore'
 
 const PAGE_SIZE = 20
 
-/** Intersects the base pokémon index with the active search/type/generation
- * filters to produce a list of candidate names, paginates that list, and
- * fetches full details for the currently visible page. Height/weight ranges
- * are applied client-side to the fetched details, since PokeAPI's list
- * endpoints don't expose those fields (see README for the trade-off). */
+// Height/weight filters run client-side on the fetched details below,
+// since PokeAPI's list endpoints don't expose those fields.
 export function usePokemonExplorer(filters: FilterState) {
   const indexQuery = useQuery({
     queryKey: ['pokemon-index'],
