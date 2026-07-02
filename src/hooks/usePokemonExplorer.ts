@@ -12,8 +12,6 @@ import type { FilterState } from '@/store/useAppStore'
 
 const PAGE_SIZE = 20
 
-// Height/weight filters run client-side on the fetched details below,
-// since PokeAPI's list endpoints don't expose those fields.
 export function usePokemonExplorer(filters: FilterState) {
   const indexQuery = useQuery({
     queryKey: ['pokemon-index'],
@@ -69,7 +67,6 @@ export function usePokemonExplorer(filters: FilterState) {
       names = names.filter((name) => genSet.has(name))
     }
 
-    // getAllPokemon already returns results in ascending id order.
     return filters.sort === 'desc' ? names.toReversed() : names
   }, [
     indexQuery.data,
@@ -82,10 +79,11 @@ export function usePokemonExplorer(filters: FilterState) {
   ])
 
   const [visibleCount, setVisibleCount] = useState(PAGE_SIZE)
+  const typesKey = filters.types.join(',')
 
   useEffect(() => {
     setVisibleCount(PAGE_SIZE)
-  }, [filters.search, filters.types.join(','), filters.generation, filters.sort])
+  }, [filters.search, typesKey, filters.generation, filters.sort])
 
   const visibleNames = candidateNames.slice(0, visibleCount)
 

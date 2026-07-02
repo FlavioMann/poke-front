@@ -17,7 +17,6 @@ async function fetchJson<T>(url: string): Promise<T> {
   return (await response.json()) as T
 }
 
-/** Fetches the full index of pokémon (name + url) in a single request. */
 export function getAllPokemon(): Promise<NamedApiResourceList> {
   return fetchJson<NamedApiResourceList>(
     `${BASE_URL}/pokemon?limit=100000&offset=0`,

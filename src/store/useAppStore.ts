@@ -33,7 +33,7 @@ interface AppState {
   setHeightRange: (range: [number, number] | null) => void
   setWeightRange: (range: [number, number] | null) => void
   setSort: (sort: SortOrder) => void
-  resetFilters: () => void
+  resetAdvancedFilters: () => void
 }
 
 export const useAppStore = create<AppState>()(
@@ -77,7 +77,15 @@ export const useAppStore = create<AppState>()(
 
       setSort: (sort) => set((state) => ({ filters: { ...state.filters, sort } })),
 
-      resetFilters: () => set({ filters: DEFAULT_FILTERS }),
+      resetAdvancedFilters: () =>
+        set((state) => ({
+          filters: {
+            ...state.filters,
+            generation: DEFAULT_FILTERS.generation,
+            heightRange: DEFAULT_FILTERS.heightRange,
+            weightRange: DEFAULT_FILTERS.weightRange,
+          },
+        })),
     }),
     {
       name: 'poke-front:store',

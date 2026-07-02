@@ -43,13 +43,22 @@ function EvolutionNode({
       <EvolutionRow name={link.species.name} detail={detailsByName.get(link.species.name)} />
       {link.evolves_to.map((child) => (
         <div key={child.species.name} className="ml-6 border-l-2 border-neutral-100 pl-4">
-          <span className="block py-1 text-xs font-semibold text-neutral-400">
-            ↓ {describeEvolution(child.evolution_details)}
+          <span className="flex items-center gap-1 py-1 text-xs font-semibold text-neutral-400">
+            <ArrowDownIcon />
+            {describeEvolution(child.evolution_details)}
           </span>
           <EvolutionNode link={child} detailsByName={detailsByName} />
         </div>
       ))}
     </div>
+  )
+}
+
+function ArrowDownIcon() {
+  return (
+    <svg viewBox="0 0 24 24" className="h-3.5 w-3.5 shrink-0 fill-none stroke-current" strokeWidth={2.5} aria-hidden="true">
+      <path strokeLinecap="round" strokeLinejoin="round" d="M12 5v14M6 13l6 6 6-6" />
+    </svg>
   )
 }
 

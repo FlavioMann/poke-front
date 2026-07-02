@@ -115,7 +115,7 @@ export function PokemonDetailPage() {
               aria-label="Voltar"
               className="flex h-9 w-9 items-center justify-center rounded-full bg-white/70 text-neutral-700"
             >
-              ←
+              <ArrowLeftIcon />
             </Link>
             <FavoriteButton name={pokemon.name} size="md" />
           </div>
@@ -247,6 +247,19 @@ export function PokemonDetailPage() {
         </div>
       </div>
     </div>
+  );
+}
+
+function ArrowLeftIcon() {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      className="h-5 w-5 fill-none stroke-current"
+      strokeWidth={2}
+      aria-hidden="true"
+    >
+      <path strokeLinecap="round" strokeLinejoin="round" d="M19 12H5M11 18l-6-6 6-6" />
+    </svg>
   );
 }
 

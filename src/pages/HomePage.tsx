@@ -16,7 +16,7 @@ export function HomePage() {
   const setHeightRange = useAppStore((state) => state.setHeightRange);
   const setWeightRange = useAppStore((state) => state.setWeightRange);
   const setSort = useAppStore((state) => state.setSort);
-  const resetFilters = useAppStore((state) => state.resetFilters);
+  const resetAdvancedFilters = useAppStore((state) => state.resetAdvancedFilters);
 
   const [filtersOpen, setFiltersOpen] = useState(false);
   const [typeSheetOpen, setTypeSheetOpen] = useState(false);
@@ -83,7 +83,7 @@ export function HomePage() {
         onSetGeneration={setGeneration}
         onSetHeightRange={setHeightRange}
         onSetWeightRange={setWeightRange}
-        onReset={resetFilters}
+        onReset={resetAdvancedFilters}
         open={filtersOpen}
         onClose={() => setFiltersOpen(false)}
       />

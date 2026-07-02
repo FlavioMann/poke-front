@@ -1,6 +1,5 @@
 import type { EvolutionChainLink, EvolutionDetail, PokemonType, TypeResponse } from '@/types/pokeapi'
 
-/** Extracts the numeric id from a PokeAPI resource url, e.g. `.../pokemon/25/` -> 25 */
 export function idFromUrl(url: string): number {
   const match = /\/(\d+)\/?$/.exec(url)
   if (!match?.[1]) {
@@ -20,17 +19,14 @@ export function formatPokemonName(name: string): string {
     .join(' ')
 }
 
-/** PokeAPI height is in decimetres; convert to metres. */
 export function heightToMeters(height: number): number {
   return height / 10
 }
 
-/** PokeAPI weight is in hectograms; convert to kilograms. */
 export function weightToKilograms(weight: number): number {
   return weight / 10
 }
 
-/** Generous bounds covering (almost) every pokémon, used as slider limits. */
 export const HEIGHT_BOUNDS: [number, number] = [0, 20]
 export const WEIGHT_BOUNDS: [number, number] = [0, 1000]
 
@@ -55,7 +51,6 @@ export const TYPE_COLORS: Record<PokemonType, string> = {
   fairy: 'bg-poke-fairy',
 }
 
-/** Light tint of each type's color, used for card/section backgrounds. */
 export const TYPE_TINTS: Record<PokemonType, string> = {
   normal: 'bg-poke-normal/15',
   fire: 'bg-poke-fire/15',
@@ -140,18 +135,15 @@ const ROMAN_NUMERALS: Record<string, string> = {
   ix: 'IX',
 }
 
-/** Formats a PokeAPI generation resource name, e.g. `generation-iii` -> `Geração III`. */
 export function formatGeneration(name: string): string {
   const suffix = name.replace('generation-', '')
   return `Geração ${ROMAN_NUMERALS[suffix] ?? suffix.toUpperCase()}`
 }
 
-/** Flattens an evolution chain tree into the list of species names it contains. */
 export function flattenEvolutionChain(link: EvolutionChainLink): string[] {
   return [link.species.name, ...link.evolves_to.flatMap(flattenEvolutionChain)]
 }
 
-/** Short PT-BR label for how a pokémon reaches the next evolution stage. */
 export function describeEvolution(details: EvolutionDetail[]): string {
   const detail = details[0]
   if (!detail) return 'Evolução'
@@ -161,7 +153,6 @@ export function describeEvolution(details: EvolutionDetail[]): string {
   return 'Evolução'
 }
 
-/** PokeAPI gender_rate is eighths-female (0-8), or -1 for genderless. */
 export function genderRatio(genderRate: number): { male: number; female: number } | null {
   if (genderRate < 0) return null
   const female = (genderRate / 8) * 100
@@ -176,7 +167,6 @@ export function speciesGenus(species: { genera: Array<{ genus: string; language:
   )
 }
 
-/** Union of types this pokémon takes 2x+ damage from, across all of its own types. */
 export function computeWeaknesses(ownTypes: string[], typeResponses: TypeResponse[]): string[] {
   const weaknesses = new Set<string>()
   for (const type of typeResponses) {
