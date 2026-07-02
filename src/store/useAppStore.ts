@@ -2,12 +2,15 @@ import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 import type { PokemonType } from '@/types/pokeapi'
 
+export type SortOrder = 'asc' | 'desc'
+
 export interface FilterState {
   search: string
   types: PokemonType[]
   generation: number | null
   heightRange: [number, number] | null
   weightRange: [number, number] | null
+  sort: SortOrder
 }
 
 export const DEFAULT_FILTERS: FilterState = {
@@ -16,6 +19,7 @@ export const DEFAULT_FILTERS: FilterState = {
   generation: null,
   heightRange: null,
   weightRange: null,
+  sort: 'asc',
 }
 
 interface AppState {
@@ -28,6 +32,7 @@ interface AppState {
   setGeneration: (generation: number | null) => void
   setHeightRange: (range: [number, number] | null) => void
   setWeightRange: (range: [number, number] | null) => void
+  setSort: (sort: SortOrder) => void
   resetFilters: () => void
 }
 
@@ -69,6 +74,8 @@ export const useAppStore = create<AppState>()(
 
       setWeightRange: (weightRange) =>
         set((state) => ({ filters: { ...state.filters, weightRange } })),
+
+      setSort: (sort) => set((state) => ({ filters: { ...state.filters, sort } })),
 
       resetFilters: () => set({ filters: DEFAULT_FILTERS }),
     }),

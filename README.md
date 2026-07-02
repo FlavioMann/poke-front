@@ -52,6 +52,10 @@ A PokeAPI não tem um único endpoint que já traga nome + tipo + altura + peso 
 5. Ordena a lista de candidatos e pagina de 20 em 20 — só os pokémons da página visível têm seus detalhes completos buscados (nome, sprite, tipos, altura, peso etc.).
 6. **Altura e peso são filtrados no cliente**, sobre os detalhes já buscados — a PokeAPI não expõe esses campos nos endpoints de listagem, então não dá para pré-filtrar sem buscar o detalhe de cada candidato. Na prática, isso significa que ao ativar um filtro de altura/peso a página pode mostrar menos de 20 resultados por "leva", e clicar em "Carregar mais" busca mais candidatos até encontrar mais correspondências. É um trade-off consciente entre simplicidade e nº de requisições — para o volume de dados da PokeAPI (~1300 pokémons) o custo é aceitável.
 
+### Sobre o design
+
+Layout, cores, badges de tipo (traduzidos para PT-BR), navegação inferior no mobile, bottom sheet de tipo e a tela de detalhe (peso/altura, categoria, gênero, fraquezas, evoluções em lista) foram ajustados a partir de telas de referência do Figma do desafio. Uma tela do Figma (favoritos com bloqueio de login) não foi replicada por conflitar com o requisito de favoritos via estado global/`localStorage` sem autenticação.
+
 ## Estrutura do projeto
 
 ```

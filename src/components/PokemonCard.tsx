@@ -1,8 +1,8 @@
 import { Link } from 'react-router-dom'
 import { TypeBadge } from '@/components/TypeBadge'
 import { FavoriteButton } from '@/components/FavoriteButton'
-import { bestSprite, formatPokemonName } from '@/lib/pokemon'
-import type { PokemonDetail } from '@/types/pokeapi'
+import { TYPE_COLORS, TYPE_TINTS, bestSprite, formatPokemonName } from '@/lib/pokemon'
+import type { PokemonDetail, PokemonType } from '@/types/pokeapi'
 
 interface PokemonCardProps {
   pokemon: PokemonDetail
@@ -10,33 +10,39 @@ interface PokemonCardProps {
 
 export function PokemonCard({ pokemon }: PokemonCardProps) {
   const sprite = bestSprite(pokemon.sprites)
+  const primaryType = pokemon.types[0]?.type.name as PokemonType | undefined
+  const tint = primaryType ? TYPE_TINTS[primaryType] : 'bg-neutral-100'
+  const solid = primaryType ? TYPE_COLORS[primaryType] : 'bg-neutral-300'
 
   return (
     <Link
       to={`/pokemon/${pokemon.name}`}
-      className="group relative flex flex-col items-center rounded-2xl border border-neutral-200 bg-white p-4 text-center shadow-sm transition hover:-translate-y-1 hover:shadow-md"
+      className={`flex items-center gap-3 rounded-2xl p-3 transition hover:-translate-y-0.5 hover:shadow-md ${tint}`}
     >
-      <FavoriteButton name={pokemon.name} className="absolute right-2 top-2" />
-      <span className="self-start text-xs font-semibold text-neutral-400">
-        #{String(pokemon.id).padStart(3, '0')}
-      </span>
-      {sprite ? (
-        <img
-          src={sprite}
-          alt={pokemon.name}
-          loading="lazy"
-          className="h-24 w-24 object-contain transition group-hover:scale-110 sm:h-28 sm:w-28"
-        />
-      ) : (
-        <div className="h-24 w-24 sm:h-28 sm:w-28" />
-      )}
-      <h3 className="mt-1 font-semibold text-neutral-800">
-        {formatPokemonName(pokemon.name)}
-      </h3>
-      <div className="mt-2 flex flex-wrap justify-center gap-1">
-        {pokemon.types.map((slot) => (
-          <TypeBadge key={slot.type.name} type={slot.type.name} />
-        ))}
+      <div className="min-w-0 flex-1 py-1">
+        <span className="text-xs font-semibold text-neutral-500">
+          Nº{String(pokemon.id).padStart(3, '0')}
+        </span>
+        <h3 className="truncate text-lg font-bold text-neutral-800">
+          {formatPokemonName(pokemon.name)}
+        </h3>
+        <div className="mt-1 flex flex-wrap gap-1">
+          {pokemon.types.map((slot) => (
+            <TypeBadge key={slot.type.name} type={slot.type.name} />
+          ))}
+        </div>
+      </div>
+
+      <div className={`relative flex h-24 w-24 shrink-0 items-center justify-center rounded-2xl ${solid}`}>
+        <FavoriteButton name={pokemon.name} size="xs" className="absolute right-1 top-1" />
+        {sprite ? (
+          <img
+            src={sprite}
+            alt={pokemon.name}
+            loading="lazy"
+            className="h-16 w-16 object-contain drop-shadow"
+          />
+        ) : null}
       </div>
     </Link>
   )

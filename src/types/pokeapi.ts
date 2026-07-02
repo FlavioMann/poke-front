@@ -86,6 +86,11 @@ export interface PokemonSpecies {
     language: NamedApiResource
     version: NamedApiResource
   }>
+  genera: Array<{
+    genus: string
+    language: NamedApiResource
+  }>
+  gender_rate: number
   color: NamedApiResource
 }
 
@@ -113,6 +118,9 @@ export interface TypeResponse {
     pokemon: NamedApiResource
     slot: number
   }>
+  damage_relations: {
+    double_damage_from: NamedApiResource[]
+  }
 }
 
 export interface GenerationResponse {

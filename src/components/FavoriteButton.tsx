@@ -2,15 +2,17 @@ import { useAppStore } from '@/store/useAppStore'
 
 interface FavoriteButtonProps {
   name: string
-  size?: 'sm' | 'md'
+  size?: 'xs' | 'sm' | 'md'
   className?: string
 }
+
+const SIZE_CLASSES = { xs: 'h-7 w-7', sm: 'h-8 w-8', md: 'h-11 w-11' } as const
 
 export function FavoriteButton({ name, size = 'sm', className = '' }: FavoriteButtonProps) {
   const isFavorite = useAppStore((state) => Boolean(state.favorites[name]))
   const toggleFavorite = useAppStore((state) => state.toggleFavorite)
 
-  const dimension = size === 'sm' ? 'h-8 w-8' : 'h-11 w-11'
+  const dimension = SIZE_CLASSES[size]
 
   return (
     <button

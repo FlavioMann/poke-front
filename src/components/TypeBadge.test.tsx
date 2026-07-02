@@ -3,14 +3,14 @@ import { describe, expect, it } from 'vitest'
 import { TypeBadge } from '@/components/TypeBadge'
 
 describe('TypeBadge', () => {
-  it('renders the capitalized type name', () => {
+  it('renders the Portuguese type name', () => {
     render(<TypeBadge type="fire" />)
-    expect(screen.getByText('Fire')).toBeInTheDocument()
+    expect(screen.getByText(/Fogo/)).toBeInTheDocument()
   })
 
   it('applies the matching background color class for a known type', () => {
     render(<TypeBadge type="water" />)
-    expect(screen.getByText('Water')).toHaveClass('bg-poke-water')
+    expect(screen.getByText(/Água/)).toHaveClass('bg-poke-water')
   })
 
   it('falls back to a neutral color for an unknown type', () => {

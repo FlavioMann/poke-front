@@ -69,12 +69,14 @@ export function usePokemonExplorer(filters: FilterState) {
       names = names.filter((name) => genSet.has(name))
     }
 
-    return names
+    // getAllPokemon already returns results in ascending id order.
+    return filters.sort === 'desc' ? names.toReversed() : names
   }, [
     indexQuery.data,
     filters.search,
     filters.types,
     filters.generation,
+    filters.sort,
     typeQueries,
     generationQuery.data,
   ])
@@ -83,7 +85,7 @@ export function usePokemonExplorer(filters: FilterState) {
 
   useEffect(() => {
     setVisibleCount(PAGE_SIZE)
-  }, [filters.search, filters.types.join(','), filters.generation])
+  }, [filters.search, filters.types.join(','), filters.generation, filters.sort])
 
   const visibleNames = candidateNames.slice(0, visibleCount)
 

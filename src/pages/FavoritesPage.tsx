@@ -32,12 +32,18 @@ export function FavoritesPage() {
       </p>
 
       {names.length === 0 ? (
-        <p className="py-16 text-center text-neutral-500">
-          Você ainda não favoritou nenhum pokémon.{' '}
-          <Link to="/" className="font-semibold text-brand-500 underline">
+        <div className="flex flex-col items-center py-16 text-center">
+          <span aria-hidden="true" className="mb-4 text-6xl grayscale opacity-40">
+            🐟
+          </span>
+          <p className="font-semibold text-neutral-700">Você não favoritou nenhum Pokémon :(</p>
+          <p className="mt-1 max-w-xs text-sm text-neutral-500">
+            Clique no ícone de coração dos seus pokémons favoritos e eles aparecerão aqui.
+          </p>
+          <Link to="/" className="mt-4 font-semibold text-brand-500 underline">
             Explorar pokédex
           </Link>
-        </p>
+        </div>
       ) : (
         <PokemonGrid pokemon={pokemon} skeletonCount={isLoading ? names.length - pokemon.length : 0} />
       )}

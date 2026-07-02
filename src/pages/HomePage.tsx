@@ -3,8 +3,10 @@ import { usePokemonExplorer } from '@/hooks/usePokemonExplorer'
 import { useAppStore } from '@/store/useAppStore'
 import { SearchBar } from '@/components/SearchBar'
 import { FilterPanel } from '@/components/FilterPanel'
+import { TypeSheet } from '@/components/TypeSheet'
 import { PokemonGrid } from '@/components/PokemonGrid'
 import { LoadMoreButton } from '@/components/LoadMoreButton'
+import { TYPE_LABELS_PT } from '@/lib/pokemon'
 
 export function HomePage() {
   const filters = useAppStore((state) => state.filters)
@@ -13,56 +15,87 @@ export function HomePage() {
   const setGeneration = useAppStore((state) => state.setGeneration)
   const setHeightRange = useAppStore((state) => state.setHeightRange)
   const setWeightRange = useAppStore((state) => state.setWeightRange)
+  const setSort = useAppStore((state) => state.setSort)
   const resetFilters = useAppStore((state) => state.resetFilters)
 
   const [filtersOpen, setFiltersOpen] = useState(false)
+  const [typeSheetOpen, setTypeSheetOpen] = useState(false)
 
   const { pokemon, isLoadingCandidates, isLoadingDetails, hasMore, loadMore, totalCandidates } =
     usePokemonExplorer(filters)
 
+  const typeLabel =
+    filters.types.length === 0
+      ? 'Todos os tipos'
+      : filters.types.length === 1
+        ? TYPE_LABELS_PT[filters.types[0]!]
+        : `${filters.types.length} tipos`
+
   return (
     <div className="mx-auto max-w-6xl px-4 py-6">
-      <div className="mb-6 flex flex-col gap-3 sm:flex-row sm:items-center">
+      <div className="mb-3">
         <SearchBar value={filters.search} onChange={setSearch} />
+      </div>
+
+      <div className="mb-6 flex flex-wrap gap-2">
+        <button
+          type="button"
+          onClick={() => setTypeSheetOpen(true)}
+          className="rounded-full bg-neutral-900 px-4 py-2 text-sm font-semibold text-white"
+        >
+          {typeLabel} ⌄
+        </button>
+
+        <select
+          value={filters.sort}
+          onChange={(event) => setSort(event.target.value as 'asc' | 'desc')}
+          aria-label="Ordenar"
+          className="rounded-full bg-neutral-900 px-4 py-2 text-sm font-semibold text-white"
+        >
+          <option value="asc">Menor número</option>
+          <option value="desc">Maior número</option>
+        </select>
+
         <button
           type="button"
           onClick={() => setFiltersOpen(true)}
-          className="flex items-center justify-center gap-2 rounded-full border border-neutral-200 bg-white px-4 py-2.5 text-sm font-semibold text-neutral-700 shadow-sm md:hidden"
+          className="rounded-full border border-neutral-300 bg-white px-4 py-2 text-sm font-semibold text-neutral-700"
         >
-          Filtros
+          Mais filtros
         </button>
       </div>
 
-      <div className="grid grid-cols-1 gap-6 md:grid-cols-[240px_1fr]">
-        <FilterPanel
-          filters={filters}
-          onToggleType={toggleType}
-          onSetGeneration={setGeneration}
-          onSetHeightRange={setHeightRange}
-          onSetWeightRange={setWeightRange}
-          onReset={resetFilters}
-          open={filtersOpen}
-          onClose={() => setFiltersOpen(false)}
-        />
+      <FilterPanel
+        filters={filters}
+        onSetGeneration={setGeneration}
+        onSetHeightRange={setHeightRange}
+        onSetWeightRange={setWeightRange}
+        onReset={resetFilters}
+        open={filtersOpen}
+        onClose={() => setFiltersOpen(false)}
+      />
 
-        <div>
-          {!isLoadingCandidates && (
-            <p className="mb-3 text-sm text-neutral-500">
-              {totalCandidates} pokémon encontrado{totalCandidates === 1 ? '' : 's'}
-            </p>
-          )}
+      <TypeSheet
+        open={typeSheetOpen}
+        selected={filters.types}
+        onToggle={toggleType}
+        onClear={() => filters.types.forEach((t) => toggleType(t))}
+        onClose={() => setTypeSheetOpen(false)}
+      />
 
-          <PokemonGrid
-            pokemon={pokemon}
-            skeletonCount={isLoadingCandidates || isLoadingDetails ? 8 : 0}
-            emptyMessage="Nenhum pokémon corresponde aos filtros selecionados."
-          />
+      {!isLoadingCandidates && (
+        <p className="mb-3 text-sm text-neutral-500">
+          {totalCandidates} pokémon encontrado{totalCandidates === 1 ? '' : 's'}
+        </p>
+      )}
 
-          {!isLoadingCandidates && hasMore && (
-            <LoadMoreButton onClick={loadMore} loading={isLoadingDetails} />
-          )}
-        </div>
-      </div>
+      <PokemonGrid
+        pokemon={pokemon}
+        skeletonCount={isLoadingCandidates || isLoadingDetails ? 8 : 0}
+        emptyMessage="Nenhum pokémon corresponde aos filtros selecionados."
+      />
+
+      {!isLoadingCandidates && hasMore && <LoadMoreButton onClick={loadMore} loading={isLoadingDetails} />}
     </div>
   )
 }

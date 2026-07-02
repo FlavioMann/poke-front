@@ -1,5 +1,5 @@
-import { useState } from 'react'
 import { NavLink } from 'react-router-dom'
+import { PokeballIcon } from '@/components/PokeballIcon'
 
 const LINKS = [
   { to: '/', label: 'Pokédex' },
@@ -14,55 +14,21 @@ function linkClass({ isActive }: { isActive: boolean }): string {
 }
 
 export function Navbar() {
-  const [open, setOpen] = useState(false)
-
   return (
-    <header className="sticky top-0 z-20 bg-brand-500 shadow">
+    <header className="sticky top-0 z-20 hidden bg-brand-500 shadow sm:block">
       <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3">
         <NavLink to="/" className="flex items-center gap-2 text-lg font-bold text-white">
-          <span aria-hidden="true">🔴</span> Pokédex
+          <PokeballIcon className="h-6 w-6" /> Pokédex
         </NavLink>
 
-        <nav className="hidden gap-1 sm:flex">
+        <nav className="flex gap-1">
           {LINKS.map((link) => (
             <NavLink key={link.to} to={link.to} className={linkClass} end={link.to === '/'}>
               {link.label}
             </NavLink>
           ))}
         </nav>
-
-        <button
-          type="button"
-          className="flex h-9 w-9 items-center justify-center rounded-full text-white sm:hidden"
-          aria-label="Abrir menu"
-          aria-expanded={open}
-          onClick={() => setOpen((o) => !o)}
-        >
-          <svg viewBox="0 0 24 24" className="h-6 w-6 stroke-current" fill="none" strokeWidth={2}>
-            {open ? (
-              <path strokeLinecap="round" d="M6 6l12 12M18 6 6 18" />
-            ) : (
-              <path strokeLinecap="round" d="M4 7h16M4 12h16M4 17h16" />
-            )}
-          </svg>
-        </button>
       </div>
-
-      {open && (
-        <nav className="flex flex-col gap-1 border-t border-white/10 px-4 pb-3 sm:hidden">
-          {LINKS.map((link) => (
-            <NavLink
-              key={link.to}
-              to={link.to}
-              className={linkClass}
-              end={link.to === '/'}
-              onClick={() => setOpen(false)}
-            >
-              {link.label}
-            </NavLink>
-          ))}
-        </nav>
-      )}
     </header>
   )
 }
