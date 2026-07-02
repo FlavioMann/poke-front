@@ -1,0 +1,15 @@
+{
+  "files.associations": {
+    "*.css": "tailwindcss"
+  },
+  "[typescript]": {
+    "editor.quickSuggestions": { "strings": "on" }
+  },
+  "[typescriptreact]": {
+    "editor.quickSuggestions": { "strings": "on" }
+  },
+  "tailwindCSS.classAttributes": ["class", "className"],
+  "tailwindCSS.experimental.classRegex": [
+    ":\\s*['\"`]([^'\"`]*)['\"`]"
+  ]
+}

@@ -1,35 +1,44 @@
-import { useState } from 'react'
-import { usePokemonExplorer } from '@/hooks/usePokemonExplorer'
-import { useAppStore } from '@/store/useAppStore'
-import { SearchBar } from '@/components/SearchBar'
-import { FilterPanel } from '@/components/FilterPanel'
-import { TypeSheet } from '@/components/TypeSheet'
-import { PokemonGrid } from '@/components/PokemonGrid'
-import { LoadMoreButton } from '@/components/LoadMoreButton'
-import { TYPE_LABELS_PT } from '@/lib/pokemon'
+import { useState } from "react";
+import { usePokemonExplorer } from "@/hooks/usePokemonExplorer";
+import { useAppStore } from "@/store/useAppStore";
+import { SearchBar } from "@/components/SearchBar";
+import { FilterPanel } from "@/components/FilterPanel";
+import { TypeSheet } from "@/components/TypeSheet";
+import { PokemonGrid } from "@/components/PokemonGrid";
+import { LoadMoreButton } from "@/components/LoadMoreButton";
+import { TYPE_COLORS, TYPE_LABELS_PT } from "@/lib/pokemon";
 
 export function HomePage() {
-  const filters = useAppStore((state) => state.filters)
-  const setSearch = useAppStore((state) => state.setSearch)
-  const toggleType = useAppStore((state) => state.toggleType)
-  const setGeneration = useAppStore((state) => state.setGeneration)
-  const setHeightRange = useAppStore((state) => state.setHeightRange)
-  const setWeightRange = useAppStore((state) => state.setWeightRange)
-  const setSort = useAppStore((state) => state.setSort)
-  const resetFilters = useAppStore((state) => state.resetFilters)
+  const filters = useAppStore((state) => state.filters);
+  const setSearch = useAppStore((state) => state.setSearch);
+  const toggleType = useAppStore((state) => state.toggleType);
+  const setGeneration = useAppStore((state) => state.setGeneration);
+  const setHeightRange = useAppStore((state) => state.setHeightRange);
+  const setWeightRange = useAppStore((state) => state.setWeightRange);
+  const setSort = useAppStore((state) => state.setSort);
+  const resetFilters = useAppStore((state) => state.resetFilters);
 
-  const [filtersOpen, setFiltersOpen] = useState(false)
-  const [typeSheetOpen, setTypeSheetOpen] = useState(false)
+  const [filtersOpen, setFiltersOpen] = useState(false);
+  const [typeSheetOpen, setTypeSheetOpen] = useState(false);
 
-  const { pokemon, isLoadingCandidates, isLoadingDetails, hasMore, loadMore, totalCandidates } =
-    usePokemonExplorer(filters)
+  const {
+    pokemon,
+    isLoadingCandidates,
+    isLoadingDetails,
+    hasMore,
+    loadMore,
+    totalCandidates,
+  } = usePokemonExplorer(filters);
 
   const typeLabel =
     filters.types.length === 0
-      ? 'Todos os tipos'
+      ? "Todos os tipos"
       : filters.types.length === 1
         ? TYPE_LABELS_PT[filters.types[0]!]
-        : `${filters.types.length} tipos`
+        : `${filters.types.length} tipos`;
+
+  const typeButtonColor =
+    filters.types.length === 1 ? TYPE_COLORS[filters.types[0]!] : "bg-neutral-900";
 
   return (
     <div className="mx-auto max-w-6xl px-4 py-6">
@@ -41,7 +50,7 @@ export function HomePage() {
         <button
           type="button"
           onClick={() => setTypeSheetOpen(true)}
-          className="flex items-center gap-1.5 rounded-full bg-neutral-900 px-4 py-2 text-sm font-semibold text-white"
+          className={`flex items-center gap-1.5 rounded-full px-4 py-2 text-sm font-semibold text-white transition-colors ${typeButtonColor}`}
         >
           {typeLabel}
           <ChevronDownIcon />
@@ -50,14 +59,14 @@ export function HomePage() {
         <div className="relative">
           <select
             value={filters.sort}
-            onChange={(event) => setSort(event.target.value as 'asc' | 'desc')}
+            onChange={(event) => setSort(event.target.value as "asc" | "desc")}
             aria-label="Ordenar"
             className="appearance-none rounded-full bg-neutral-900 py-2 pl-4 pr-8 text-sm font-semibold text-white"
           >
             <option value="asc">Menor número</option>
             <option value="desc">Maior número</option>
           </select>
-          <ChevronDownIcon className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2" />
+          <ChevronDownIcon className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-white" />
         </div>
 
         <button
@@ -89,7 +98,7 @@ export function HomePage() {
 
       {!isLoadingCandidates && (
         <p className="mb-3 text-sm text-neutral-500">
-          {totalCandidates} pokémon encontrado{totalCandidates === 1 ? '' : 's'}
+          {totalCandidates} pokémon encontrado{totalCandidates === 1 ? "" : "s"}
         </p>
       )}
 
@@ -99,15 +108,22 @@ export function HomePage() {
         emptyMessage="Nenhum pokémon corresponde aos filtros selecionados."
       />
 
-      {!isLoadingCandidates && hasMore && <LoadMoreButton onClick={loadMore} loading={isLoadingDetails} />}
+      {!isLoadingCandidates && hasMore && (
+        <LoadMoreButton onClick={loadMore} loading={isLoadingDetails} />
+      )}
     </div>
-  )
+  );
 }
 
-function ChevronDownIcon({ className = '' }: { className?: string }) {
+function ChevronDownIcon({ className = "" }: { className?: string }) {
   return (
-    <svg viewBox="0 0 24 24" className={`h-3.5 w-3.5 shrink-0 fill-none stroke-current ${className}`} strokeWidth={2.5} aria-hidden="true">
+    <svg
+      viewBox="0 0 24 24"
+      className={`h-3.5 w-3.5 shrink-0 fill-none stroke-current ${className}`}
+      strokeWidth={2.5}
+      aria-hidden="true"
+    >
       <path strokeLinecap="round" strokeLinejoin="round" d="m6 9 6 6 6-6" />
     </svg>
-  )
+  );
 }
