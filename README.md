@@ -71,7 +71,7 @@ src/
 
 ## Deploy
 
-Publicado na Vercel: **https://poke-front-delta.vercel.app**
+Publicado na Vercel: **https://poke-front-delta.vercel.app** (deploy automático a cada push em `main`, via integração Git da Vercel)
 
 O build de produção (`npm run build`) gera um SPA estático em `dist/`, publicável em qualquer host estático (Vercel, Netlify, GitHub Pages, Cloudflare Pages). Como o roteamento é feito no cliente (React Router), o host precisa redirecionar todas as rotas para `index.html` (ex.: rewrite `/* -> /index.html`) — a Vercel faz isso automaticamente para builds Vite.
 
