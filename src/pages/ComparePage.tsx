@@ -50,6 +50,10 @@ export function ComparePage() {
           <ComparisonColumn pokemon={detailA.data} opponent={detailB.data} />
           <ComparisonColumn pokemon={detailB.data} opponent={detailA.data} />
         </div>
+      ) : detailA.isError || detailB.isError ? (
+        <p className="py-16 text-center text-neutral-400">
+          Pokémon não encontrado. Confira o nome e tente novamente.
+        </p>
       ) : (
         <p className="py-16 text-center text-neutral-400">
           {a && b ? 'Carregando...' : 'Selecione dois pokémons acima para ver a comparação.'}
