@@ -2,7 +2,7 @@
 
 Uma Pokédex construída em React + TypeScript consumindo a [PokeAPI](https://pokeapi.co/), como parte de um desafio técnico de frontend.
 
-**Deploy:** _a preencher após publicação (veja "Deploy" abaixo)._
+**Deploy:** https://poke-front-delta.vercel.app
 
 ## Funcionalidades
 
@@ -71,4 +71,8 @@ src/
 
 ## Deploy
 
-O build de produção (`npm run build`) gera um SPA estático em `dist/`, publicável em qualquer host estático (Vercel, Netlify, GitHub Pages, Cloudflare Pages). Como o roteamento é feito no cliente (React Router), o host precisa redirecionar todas as rotas para `index.html` (ex.: rewrite `/* -> /index.html`).
+Publicado na Vercel: **https://poke-front-delta.vercel.app**
+
+O build de produção (`npm run build`) gera um SPA estático em `dist/`, publicável em qualquer host estático (Vercel, Netlify, GitHub Pages, Cloudflare Pages). Como o roteamento é feito no cliente (React Router), o host precisa redirecionar todas as rotas para `index.html` (ex.: rewrite `/* -> /index.html`) — a Vercel faz isso automaticamente para builds Vite.
+
+Para reimplantar: `npx vercel --prod` (requer login prévio com `npx vercel login`).
