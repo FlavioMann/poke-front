@@ -13,6 +13,21 @@ SPA para explorar, filtrar, favoritar e comparar pokémons.
 - Filtros e favoritos persistidos no navegador
 - Layout responsivo
 
+## ✅ Requisitos do desafio
+
+**Consumo de API**
+- Listagem com paginação via botão "Carregar mais" (`usePokemonExplorer`), 20 pokémons por vez, cada card com nome, sprite e tipos (`PokemonCard`).
+- Detalhes completos em rota dedicada `/pokemon/:name` (`PokemonDetailPage`): stats, habilidades, altura/peso, fraquezas e cadeia de evolução.
+
+**Gerenciamento de estados**
+- Favoritar/desfavoritar com estado global em Zustand (`useAppStore`), persistido em `localStorage`. Lista de favoritos em `/favoritos`.
+
+**Filtros**
+- Busca por nome (`SearchBar`) e filtro por tipo (`TypeSheet`), combináveis entre si.
+
+**Responsividade**
+- Grid adaptável (1 coluna no mobile, 2 no tablet, 3 no desktop) e navegação por `BottomNav` no mobile / `Navbar` no desktop.
+
 ## 💎 Stack
 
 React 19 + TypeScript, Vite, Tailwind CSS v4, TanStack React Query, Zustand e React Router. Testes com Vitest + React Testing Library.
